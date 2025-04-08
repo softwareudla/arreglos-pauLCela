@@ -1,1 +1,96 @@
+#include <stdio.h>
+#include <string.h>
 
+int main (int argc, char *argv[])
+{
+    int opc1,cont = 0, len = 1, aux;
+    char materias [3][30];
+    char nombres [5][30];
+    float promedio_materias [5];
+    float nota_bio[5];
+    float nota_mate[5];
+    float nota_leng[5];
+    float promedio_final;
+    float promedio_altobio;
+    float promedio_altomate;
+    float promedio_altoleng;
+    float promedio_bajobio;
+    float promedio_bajomate;
+    float promedio_bajoleng;
+
+
+    do{
+        printf("Seleccione una opcion \n");
+        printf("1. Registrar nombres de estudiantes \n");
+        printf("2. Ingresar calificaciones \n");
+        printf("3. Calcular promedio de general de estudiante \n");
+        printf("4. Calcular promedio de materia \n");
+        printf("5. Ver aprobados y reprobados \n");
+        printf("6. Promedios altos y bajos \n");
+        scanf("%d",&opc1);
+
+        switch (opc1)
+        {
+            case 1:
+                len = 0;
+                for (int i = 0; i<5 ; i++){
+                    printf("Ingrese el nombre del estudiante %d: ", cont);
+                    fflush(stdin);
+                    fgets(nombres[i],30,stdin);
+                    cont++;
+            
+                    len = strlen(nombres[i]) - 1;
+                    nombres[i][len]='\0';
+                }
+                len = 0;
+                printf("Nombres ingresados con exito.\n");
+
+                break;
+
+            case 2:
+                
+                if (len == 1){
+                    cont = 1;
+                    printf ("#\t\tNombre\n");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        printf("%d\t\t%s\n",cont ,nombres[i]);
+                        cont++;
+                    }
+                    printf("Seleccione el estudiante al que registrará la nota");
+                    scanf("%d", &aux);
+                    do{ 
+                        if (aux > 0 && aux<=5){
+                            aux--;
+                            printf("");
+                        } 
+                    } while (aux > 0 && aux<=5);
+                    
+                    
+                } else {
+                    printf("No hay estudiantes registrados\n");
+                }
+                break;
+
+            case 3:
+                
+
+                break;
+
+            case 4:
+                
+
+                break;
+
+            case 5:
+                
+
+                break;
+
+        }
+
+    }
+
+
+    return 0;
+}
