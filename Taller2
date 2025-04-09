@@ -3,7 +3,7 @@
 
 int main (int argc, char *argv[])
 {
-    int opc1,cont = 0, len = 1, aux;
+    int opc1,cont = 0, len = 1, aux, opc2 = 0;
     char materias [3][30];
     char nombres [5][30];
     float promedio_materias [5];
@@ -20,13 +20,13 @@ int main (int argc, char *argv[])
 
 
     do{
-        printf("Seleccione una opcion \n");
-        printf("1. Registrar nombres de estudiantes \n");
-        printf("2. Ingresar calificaciones \n");
-        printf("3. Calcular promedio de general de estudiante \n");
-        printf("4. Calcular promedio de materia \n");
-        printf("5. Ver aprobados y reprobados \n");
-        printf("6. Promedios altos y bajos \n");
+        printf("Seleccione una opcion: \n");
+        printf("1. Registrar nombres de estudiantes. \n");
+        printf("2. Ingresar calificaciones. \n");
+        printf("3. Calcular promedio de general de estudiantes. \n");
+        printf("4. Calcular promedio de materias. \n");
+        printf("5. Ver aprobados y reprobados. \n");
+        printf("6. Promedios altos y bajos. \n");
         scanf("%d",&opc1);
 
         switch (opc1)
@@ -50,29 +50,63 @@ int main (int argc, char *argv[])
             case 2:
                 
                 if (len == 1){
-                    cont = 1;
-                    printf ("#\t\tNombre\n");
-                    for (int i = 0; i < 5; i++)
-                    {
-                        printf("%d\t\t%s\n",cont ,nombres[i]);
-                        cont++;
-                    }
-                    printf("Seleccione el estudiante al que registrará la nota");
-                    scanf("%d", &aux);
                     do{ 
+                        cont = 1;
+                        printf ("#\t\tNombre\n");
+                        for (int i = 0; i < 5; i++)
+                        {
+                            printf("%d\t\t%s\n",cont ,nombres[i]);
+                            cont++;
+                        }
+                        printf("Seleccione el estudiante al que registrará la nota");
+                        scanf("%d", &aux);
+
                         if (aux > 0 && aux<=5){
                             aux--;
-                            printf("");
-                        } 
-                    } while (aux > 0 && aux<=5);
+                            printf("\nIngrese la nota de Biología del estudiante %s: ", nombres[aux]);
+                            do {
+                                scanf("%d", &nota_bio[aux]);
+                                if (nota_bio[aux]< 0 || nota_bio[aux] > 10){
+                                    printf("\nLa nota no es válida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                } 
+                            } while (nota_bio[aux]< 0 || nota_bio[aux] > 10);
+                            printf("\nIngrese la nota de Lengua del estudiante %s: ", nombres[aux]);
+                            do {
+                                scanf("%d", &nota_leng[aux]);
+                                if (nota_leng[aux]< 0 || nota_leng[aux] > 10){
+                                    printf("\nLa nota no es válida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                } 
+                            } while (nota_leng[aux]< 0 || nota_leng[aux] > 10);
+                            printf("\nIngrese la nota de Matemáticas del estudiante %s: ", nombres[aux]);
+                            do {
+                                scanf("%d", &nota_mate[aux]);
+                                if (nota_mate[aux]< 0 || nota_mate[aux] > 10){
+                                    printf("\nLa nota no es válida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                } 
+                            } while (nota_mate[aux]< 0 || nota_mate[aux] > 10);
+                        } else {
+                            printf("El numero de estudiante ingresado es invalido.\n Ingrese nuevamente el numero del estudiante\n");
+                        }
+
+                        printf("Desea ingresar la nota de otro estudiante? \n 1. Si \n 2. No\n");
+                        do {
+                            scanf("%d", &opc2);
+                            if (opc2 < 1 || opc2 > 2){
+                                printf("Opcion invalida. Ingrese nuevamente la opcion: ");
+                            }
+                        } while (opc2 < 1 || opc2 > 2);
+                    } while (opc2 == 1);
                     
-                    
+                    printf("Notas ingresadas con exito.\n");
+
                 } else {
                     printf("No hay estudiantes registrados\n");
                 }
+
                 break;
 
             case 3:
+                
                 
 
                 break;
