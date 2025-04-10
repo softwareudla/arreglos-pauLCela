@@ -1,37 +1,41 @@
 #include <stdio.h>
 #include <string.h>
 
-int main (int argc, char *argv[])
+int main ()
 {
-    int opc1,cont = 0, len = 1, aux, opc2 = 0;
-    char materias [3][30];
+    int opc1,cont = 0, len = 1, aux, opc2 = 0, noting = 0, nombing = 0;
+    int notasreg[5] = {0,0,0,0,0};
+    char materias [3][30] = {"Biologia", "Lenguaje", "Matematicas"};
     char nombres [5][30];
     float promedio_materias [5];
     float nota_bio[5];
     float nota_mate[5];
     float nota_leng[5];
-    float promedio_final;
-    float promedio_altobio;
-    float promedio_altomate;
-    float promedio_altoleng;
-    float promedio_bajobio;
-    float promedio_bajomate;
-    float promedio_bajoleng;
+    float promedio_final = 0;
+    float promedio_altobio = 0;
+    float promedio_altomate = 0;
+    float promedio_altoleng = 0;
+    float promedio_bajobio = 0;
+    float promedio_bajomate = 0;
+    float promedio_bajoleng = 0;
 
 
     do{
-        printf("Seleccione una opcion: \n");
+        printf("-----Menu-----\n");
         printf("1. Registrar nombres de estudiantes. \n");
         printf("2. Ingresar calificaciones. \n");
-        printf("3. Calcular promedio de general de estudiantes. \n");
+        printf("3. Calcular promedio general de estudiantes. \n");
         printf("4. Calcular promedio de materias. \n");
         printf("5. Ver aprobados y reprobados. \n");
         printf("6. Promedios altos y bajos. \n");
+        printf("Seleccione una opcion: ");
         scanf("%d",&opc1);
-
-        switch (opc1)
-        {
+        printf("---------------------\n");
+        printf("\n");
+        printf("\n");
+        switch (opc1){
             case 1:
+                cont = 1;
                 len = 0;
                 for (int i = 0; i<5 ; i++){
                     printf("Ingrese el nombre del estudiante %d: ", cont);
@@ -41,54 +45,107 @@ int main (int argc, char *argv[])
             
                     len = strlen(nombres[i]) - 1;
                     nombres[i][len]='\0';
+                    nombing++;
                 }
                 len = 0;
                 printf("Nombres ingresados con exito.\n");
-
+                printf("\n");
+                printf("\n");
                 break;
 
             case 2:
                 
-                if (len == 1){
+                if (nombing > 0){
                     do{ 
                         cont = 1;
-                        printf ("#\t\tNombre\n");
-                        for (int i = 0; i < 5; i++)
-                        {
-                            printf("%d\t\t%s\n",cont ,nombres[i]);
+                        printf ("#\tNombre\n");
+                        for (int i = 0; i < 5; i++){
+                            printf("%d\t%s\n",cont ,nombres[i]);
                             cont++;
                         }
-                        printf("Seleccione el estudiante al que registrará la nota");
-                        scanf("%d", &aux);
+                        printf("Seleccione el estudiante al que registrara la nota: ");
+                        do {
+                            scanf("%d", &aux);
+                            if (aux < 1 || aux > 5){
+                                printf("El numero de estudiante ingresado es invalido.\nIngrese nuevamente el numero del estudiante: ");
+                            }
+                        } while (aux < 1 || aux > 5);
 
                         if (aux > 0 && aux<=5){
                             aux--;
-                            printf("\nIngrese la nota de Biología del estudiante %s: ", nombres[aux]);
-                            do {
-                                scanf("%d", &nota_bio[aux]);
-                                if (nota_bio[aux]< 0 || nota_bio[aux] > 10){
-                                    printf("\nLa nota no es válida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                            if (notasreg[aux] == 1){
+                                printf("El estudiante %s ya tiene notas registradas.\n", nombres[aux]);
+                                printf("Desea reingresar las notas del estudiante? \n 1. Si \n 2. No\n");
+                                printf("Ingrese la opcion: ");
+                                do {
+                                    scanf("%d", &opc2);
+                                    if (opc2 < 1 || opc2 > 2){
+                                        printf("Opcion invalida. Ingrese nuevamente la opcion: ");
+                                    }
+                                } while (opc2 < 1 || opc2 > 2);
+
+                                if (opc2 == 1){
+                                    printf("\nIngrese la nota de Biologia del estudiante %s: ", nombres[aux]);
+                                    do {
+                                        scanf("%f", &nota_bio[aux]);
+                                        if (nota_bio[aux]< 0 || nota_bio[aux] > 10){
+                                            printf("\nLa nota no es valida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                        } 
+                                    } while (nota_bio[aux]< 0 || nota_bio[aux] > 10);
+                                    printf("\nIngrese la nota de Lenguaje del estudiante %s: ", nombres[aux]);
+                                    do {
+                                        scanf("%f", &nota_leng[aux]);
+                                        if (nota_leng[aux]< 0 || nota_leng[aux] > 10){
+                                            printf("\nLa nota no es valida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                        } 
+                                    } while (nota_leng[aux]< 0 || nota_leng[aux] > 10);
+                                    printf("\nIngrese la nota de Matematicas del estudiante %s: ", nombres[aux]);
+                                    do {
+                                        scanf("%f", &nota_mate[aux]);
+                                        if (nota_mate[aux]< 0 || nota_mate[aux] > 10){
+                                            printf("\nLa nota no es valida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                        } 
+                                    } while (nota_mate[aux]< 0 || nota_mate[aux] > 10);
+                                    notasreg[aux] = 1;
+                                    printf("\nNotas del estudiante %s reingresadas con exito.\n", nombres[aux]);
                                 } 
-                            } while (nota_bio[aux]< 0 || nota_bio[aux] > 10);
-                            printf("\nIngrese la nota de Lengua del estudiante %s: ", nombres[aux]);
-                            do {
-                                scanf("%d", &nota_leng[aux]);
-                                if (nota_leng[aux]< 0 || nota_leng[aux] > 10){
-                                    printf("\nLa nota no es válida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
-                                } 
-                            } while (nota_leng[aux]< 0 || nota_leng[aux] > 10);
-                            printf("\nIngrese la nota de Matemáticas del estudiante %s: ", nombres[aux]);
-                            do {
-                                scanf("%d", &nota_mate[aux]);
-                                if (nota_mate[aux]< 0 || nota_mate[aux] > 10){
-                                    printf("\nLa nota no es válida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
-                                } 
-                            } while (nota_mate[aux]< 0 || nota_mate[aux] > 10);
+
+                            } else {
+                                printf("\nIngrese la nota de Biologia del estudiante %s: ", nombres[aux]);
+                                do {
+                                    scanf("%f", &nota_bio[aux]);
+                                    if (nota_bio[aux]< 0 || nota_bio[aux] > 10){
+                                        printf("\nLa nota no es valida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                    } 
+                                } while (nota_bio[aux]< 0 || nota_bio[aux] > 10);
+                                printf("\nIngrese la nota de Lenguaje del estudiante %s: ", nombres[aux]);
+                                do {
+                                    scanf("%f", &nota_leng[aux]);
+                                    if (nota_leng[aux]< 0 || nota_leng[aux] > 10){
+                                        printf("\nLa nota no es valida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                    } 
+                                } while (nota_leng[aux]< 0 || nota_leng[aux] > 10);
+                                printf("\nIngrese la nota de Matematicas del estudiante %s: ", nombres[aux]);
+                                do {
+                                    scanf("%f", &nota_mate[aux]);
+                                    if (nota_mate[aux]< 0 || nota_mate[aux] > 10){
+                                        printf("\nLa nota no es valida. Debe ser entre 0 y 10. Ingrese nuevamente la nota: ");
+                                    } 
+                                } while (nota_mate[aux]< 0 || nota_mate[aux] > 10);
+                                notasreg[aux] = 1;
+                                printf("\nNotas del estudiante %s ingresadas con exito.\n", nombres[aux]);
+                            }
+                            
+                            
                         } else {
                             printf("El numero de estudiante ingresado es invalido.\n Ingrese nuevamente el numero del estudiante\n");
                         }
+                        
 
+                        noting++;
+                        opc2 = 0;
                         printf("Desea ingresar la nota de otro estudiante? \n 1. Si \n 2. No\n");
+                        printf("Ingrese la opcion: ");
                         do {
                             scanf("%d", &opc2);
                             if (opc2 < 1 || opc2 > 2){
@@ -107,12 +164,93 @@ int main (int argc, char *argv[])
 
             case 3:
                 
-                
+                if (nombing == 0){
+                    printf("No hay estudiantes registrados.\n\n\n");
+                } else {
+                    if (noting == 0){
+                        printf("No hay notas registradas.\n");
+                    } else {
+                        cont = 1;
+                        printf("#\t\tNombre\t\tPromedio\n");
+                        for (int i = 0; i < 5; i++){
+                            if (notasreg[i] == 1){
+                                promedio_final = (nota_bio[i] + nota_leng[i] + nota_mate[i]) / 3;
+                                printf("%d\t\t%s\t\t%.2f\n",cont ,nombres[i], promedio_final);
+                            }
+                            cont++;
+                        }
+                        
+                    }
+                }
 
                 break;
 
             case 4:
                 
+                if (nombing == 0){
+                    printf("No hay estudiantes registrados.\n\n\n");
+                } else {
+                    if (noting == 0){
+                        printf("No hay notas registradas.\n");
+                    } else {
+                        do {
+                            printf("#\tMateria\n");
+                            cont = 1;
+                            for (int i = 0; i < 3; i++){
+                                printf("%d\t%s\n",cont ,materias[i]);
+                                cont++;
+                            }
+                            printf("Elija la materia para ver el promedio de calificaciones grupal: ");
+                            do {
+                                scanf("%d", &aux);
+                                if (aux < 1 || aux > 3){
+                                    printf("El numero de materia ingresado es invalido.\nIngrese nuevamente el numero de la materia: ");
+                                }
+                            } while (aux < 1 || aux > 3);
+                            aux--;
+                            cont = 1;
+                            
+                            printf("\nPromedio de %s\n", materias[aux]);
+                            printf("#\tNombre\tNota\n");
+                            for (int i = 0; i < 5; i++){
+                                if (notasreg[i] == 1){
+                                    if (aux == 0){
+                                        printf("%d\t%s\t%.2f\n",cont ,nombres[i], nota_bio[i]);
+                                    } else if (aux == 1){
+                                        printf("%d\t%s\t%.2f\n",cont ,nombres[i], nota_leng[i]);
+                                    } else if (aux == 2){
+                                        printf("%d\t%s\t%.2f\n",cont ,nombres[i], nota_mate[i]);
+                                    }
+                                    
+                                }
+                                cont++;
+                            }
+                            printf("El promedio de la materia de %s es: ", materias[aux]);
+                            for (int i = 0; i < 5; i++){
+                                if (notasreg[i] == 1){
+                                    if (aux == 0){
+                                        promedio_final += nota_bio[i];
+                                    } else if (aux == 1){
+                                        promedio_final += nota_leng[i];
+                                    } else if (aux == 2){
+                                        promedio_final += nota_mate[i];
+                                    }
+                                }
+                            }
+                            promedio_final = promedio_final / cont;
+                            printf("%.2f\n", promedio_final);
+                            printf("\n");
+                            printf("Desea ver el promedio de otra materia? \n 1. Si \n 2. No\n");
+                            printf("Ingrese la opcion: ");
+                            do {
+                                scanf("%d", &opc2);
+                                if (opc2 < 1 || opc2 > 2){
+                                    printf("Opcion invalida. Ingrese nuevamente la opcion: ");
+                                }
+                            } while (opc2 < 1 || opc2 > 2);
+                        } while (opc2 == 1);
+                    }
+                }
 
                 break;
 
@@ -121,10 +259,12 @@ int main (int argc, char *argv[])
 
                 break;
 
+            default:
+                printf("Opcion invalida. Ingrese nuevamente la opcion: ");
+                break;
         }
 
-    }
-
+    } while (opc1 != 6);
 
     return 0;
 }
