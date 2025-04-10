@@ -3,7 +3,7 @@
 
 int main ()
 {
-    int opc1,cont = 0, len = 1, aux, opc2 = 0, noting = 0, nombing = 0, cont2 = 0, opc3 = 0;
+    int opc1,cont = 0, len = 1, aux, opc2 = 0, noting = 0, nombing = 0, cont2 = 0, opc3 = 0, val, opc4 = 0;
     int notasreg[5] = {0,0,0,0,0};
     char materias [3][30] = {"Biologia", "Lenguaje", "Matematicas"};
     char nombres [5][30];
@@ -30,7 +30,15 @@ int main ()
         printf("7. Salir. \n");
         printf("---------------------\n");
         printf("Seleccione una opcion: ");
-        scanf("%d",&opc1);
+        do {
+            fflush(stdin);
+            val = scanf("%d", &opc1);
+            if (val != 1){
+                printf("Valor incorrecto ingrese denuevo: ");
+            }
+        } while (val != 1);
+        
+
         printf("---------------------\n");
         printf("\n");
         printf("\n");
@@ -47,6 +55,15 @@ int main ()
                     len = strlen(nombres[i]) - 1;
                     nombres[i][len]='\0';
                     nombing++;
+
+                    printf("Desea ingresar otro estudiante?\n1.Si\n2.No\n");
+                    printf("Ingrese la opcion: ");
+                    scanf("%d", &opc4);
+                    if (opc4 == 2){
+                        break;
+                    } else {
+                        printf("Continuando... \n");
+                    }
                 }
                 len = 0;
                 printf("Nombres ingresados con exito.\n");
