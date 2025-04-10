@@ -427,8 +427,8 @@ int main ()
                                     if (notasreg[i] == 1) {
                                         float nota_alta = nota_bio[i];
                                         float nota_baja = nota_bio[i];
-                                        const char *materia_alta = materias[0];
-                                        const char *materia_baja = materias[0];
+                                        char *materia_alta = materias[0];
+                                        char *materia_baja = materias[0];
     
                                         if (nota_leng[i] > nota_alta) {
                                             nota_alta = nota_leng[i];
