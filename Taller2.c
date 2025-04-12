@@ -3,10 +3,10 @@
 
 int main ()
 {
-    int opc1,cont = 0, len = 1, aux, opc2 = 0, noting = 0, nombing = 0, cont2 = 0, opc3 = 0, val, opc4 = 0;
+    int opc1,cont = 0, len = 1, aux, opc2 = 0, noting = 0, nombing = 0, cont2 = 0, opc3 = 0, val, opc4 = 0, contp = 1;
     int notasreg[5] = {0,0,0,0,0};
     char materias [3][30] = {"Biologia", "Lenguaje", "Matematicas"};
-    char nombres [5][30];
+    char nombres [5][30] = {"\0","\0","\0","\0","\0"};
     float nota_bio[5] = {0,0,0,0,0};
     float nota_mate[5] = {0,0,0,0,0};
     float nota_leng[5] = {0,0,0,0,0};
@@ -46,31 +46,147 @@ int main ()
             case 1:
                 cont = 1;
                 len = 0;
-                for (int i = 0; i<5 ; i++){
-                    printf("Ingrese el nombre del estudiante %d: ", cont);
-                    fflush(stdin);
-                    fgets(nombres[i],30,stdin);
-                    cont++;
-            
-                    len = strlen(nombres[i]) - 1;
-                    nombres[i][len]='\0';
-                    nombing++;
-
-                    printf("Desea ingresar otro estudiante?\n1.Si\n2.No\n");
+                if (nombing > 0){
+                    printf("Ya hay %d estudiantes registrados.\n", nombing);
+                    printf("Desea ingresar mas estudiantes?\n1.Si\n2.No\n");
                     printf("Ingrese la opcion: ");
-                    scanf("%d", &opc4);
-                    if (opc4 == 2){
-                        break;
-                    } else {
-                        printf("Continuando... \n");
+                    do {
+                        fflush(stdin);
+                        val = scanf("%d", &opc4);
+                        if (val != 1){
+                            printf("Valor incorrecto ingrese denuevo: ");
+                        }
+                    } while (val != 1);
+
+                    if (opc4 == 1){
+                        if (nombing >= 5){
+                            printf("No se pueden ingresar mas estudiantes.\n");
+                            printf("Desea imngresarlos nuevamente?\n");
+                            printf("1.Si\n2.No\n");
+                            printf("Ingrese la opcion: ");
+                            do {
+                                fflush(stdin);
+                                val = scanf("%d", &opc4);
+                                if (val != 1){
+                                    printf("Valor incorrecto ingrese denuevo: ");
+                                }
+                            } while (val != 1);
+
+                            if (opc4 == 1){
+                                nombing = 0;
+                                cont = 1;
+                                contp = 1;
+                                for (int i = 0; i<5 ; i++){
+                                    printf("Ingrese el nombre del estudiante %d: ", cont);
+                                    fflush(stdin);
+                                    fgets(nombres[i],30,stdin);
+                                    cont++;
+                            
+                                    len = strlen(nombres[i]) - 1;
+                                    nombres[i][len]='\0';
+                                    nombing++;
+                                    
+                                    if (nombing < 5){
+                                        printf("Desea ingresar otro estudiante?\n1.Si\n2.No\n");
+                                        printf("Ingrese la opcion: ");
+                                        do {
+                                            fflush(stdin);
+                                            val = scanf("%d", &opc4);
+                                            if (val != 1){
+                                                printf("Valor incorrecto ingrese denuevo: ");
+                                            }
+                                        } while (val != 1);
+                                        if (opc4 == 2){
+                                            break;
+                                        } else {
+                                            printf("Continuando... \n");
+                                            contp++;
+                                        }
+                                
+                                    } else {
+                                        printf("Valor maximo de estudiantes alcanzado.\n");
+                                    }
+                                }
+                                
+                            } else {
+                                printf("Saliendo del menu de registro de estudiantes.\n\n\n");
+                            }
+                        } else {
+                            cont++;
+                            for (int i = nombing; i<5 ; i++){
+                                printf("Ingrese el nombre del estudiante %d: ", cont);
+                                fflush(stdin);
+                                fgets(nombres[i],30,stdin);
+                                cont++;
+                        
+                                len = strlen(nombres[i]) - 1;
+                                nombres[i][len]='\0';
+                                nombing++;
+                                
+                                if (nombing < 5){
+                                    printf("Desea ingresar otro estudiante?\n1.Si\n2.No\n");
+                                    printf("Ingrese la opcion: ");
+                                    do {
+                                        fflush(stdin);
+                                        val = scanf("%d", &opc4);
+                                        if (val != 1){
+                                            printf("Valor incorrecto ingrese denuevo: ");
+                                        }
+                                    } while (val != 1);
+                                    if (opc4 == 2){
+                                        break;
+                                    } else {
+                                        printf("Continuando... \n");
+                                        contp++;
+                                    }
+                                
+                                } else {
+                                    printf("Valor maximo de estudiantes alcanzado.\n");
+                                }
+                            }
+                        }
+                        printf("Nombres ingresados con exito.\n\n\n");
+                    } else if (opc4 == 2){
+                        printf("Saliendo del menu de registro de estudiantes.\n\n\n");
+                    }
+                } else {	
+                    
+                    for (int i = 0; i<5 ; i++){
+                        printf("Ingrese el nombre del estudiante %d: ", cont);
+                        fflush(stdin);
+                        fgets(nombres[i],30,stdin);
+                        cont++;
+                
+                        len = strlen(nombres[i]) - 1;
+                        nombres[i][len]='\0';
+                        nombing++;
+                        
+                        if (nombing < 5){
+                            printf("Desea ingresar otro estudiante?\n1.Si\n2.No\n");
+                            printf("Ingrese la opcion: ");
+                            do {
+                                fflush(stdin);
+                                val = scanf("%d", &opc4);
+                                if (val != 1){
+                                    printf("Valor incorrecto ingrese denuevo: ");
+                                }
+                            } while (val != 1);
+                            if (opc4 == 2){
+                                break;
+                            } else {
+                                printf("Continuando... \n");
+                                contp++;
+                            }
+                        
+                        } else {
+                            printf("Valor maximo de estudiantes alcanzado.\n");
+                        }
                     }
                 }
                 len = 0;
-                printf("Nombres ingresados con exito.\n");
                 break;
 
             case 2:
-                
                 if (nombing > 0){
                     do{ 
                         cont = 1;
@@ -81,20 +197,33 @@ int main ()
                         }
                         printf("Seleccione el estudiante al que registrara la nota: ");
                         do {
-                            scanf("%d", &aux);
-                            if (aux < 1 || aux > 5){
+                            
+                            do {
+                                fflush(stdin);
+                                val = scanf("%d", &aux);
+                                if (val != 1){
+                                    printf("Valor incorrecto ingrese denuevo: ");
+                                }
+                            } while (val != 1);
+                            if (aux < 1 || aux > 5 || contp < aux){
                                 printf("El numero de estudiante ingresado es invalido.\nIngrese nuevamente el numero del estudiante: ");
                             }
-                        } while (aux < 1 || aux > 5);
+                        } while (aux < 1 || aux > 5 || contp < aux);
 
                         if (aux > 0 && aux<=5){
                             aux--;
                             if (notasreg[aux] == 1){
                                 printf("El estudiante %s ya tiene notas registradas.\n", nombres[aux]);
-                                printf("Desea reingresar las notas del estudiante? \n 1. Si \n 2. No\n");
+                                printf("Desea modificar las notas del estudiante? \n 1. Si \n 2. No\n");
                                 printf("Ingrese la opcion: ");
                                 do {
-                                    scanf("%d", &opc2);
+                                    do {
+                                        fflush(stdin);
+                                        val = scanf("%d", &opc2);
+                                        if (val != 1){
+                                            printf("Valor incorrecto ingrese denuevo: ");
+                                        }
+                                    } while (val != 1);
                                     if (opc2 < 1 || opc2 > 2){
                                         printf("Opcion invalida. Ingrese nuevamente la opcion: ");
                                     }
@@ -103,47 +232,91 @@ int main ()
                                 if (opc2 == 1){
                                     printf("\nIngrese la nota de Biologia del estudiante %s: ", nombres[aux]);
                                     do {
-                                        scanf("%f", &nota_bio[aux]);
+                                        do {
+                                            fflush(stdin);
+                                            val = scanf("%f", &nota_bio[aux]);
+                                            if (val != 1){
+                                                printf("Valor incorrecto ingrese denuevo: ");
+                                            }
+                                        } while (val != 1);
+                                        
                                         if (nota_bio[aux]< 0.1 || nota_bio[aux] > 10){
                                             printf("\nLa nota no es valida. Debe ser entre 0.1 y 10. Ingrese nuevamente la nota: ");
                                         } 
                                     } while (nota_bio[aux]< 0.1 || nota_bio[aux] > 10);
                                     printf("\nIngrese la nota de Lenguaje del estudiante %s: ", nombres[aux]);
                                     do {
-                                        scanf("%f", &nota_leng[aux]);
+                                        do {
+                                            fflush(stdin);
+                                            val = scanf("%f", &nota_leng[aux]);
+                                            if (val != 1){
+                                                printf("Valor incorrecto ingrese denuevo: ");
+                                            }
+                                        } while (val != 1);
+                                        
                                         if (nota_leng[aux]< 0.1 || nota_leng[aux] > 10){
                                             printf("\nLa nota no es valida. Debe ser entre 0.1 y 10. Ingrese nuevamente la nota: ");
                                         } 
                                     } while (nota_leng[aux]< 0.1 || nota_leng[aux] > 10);
                                     printf("\nIngrese la nota de Matematicas del estudiante %s: ", nombres[aux]);
                                     do {
-                                        scanf("%f", &nota_mate[aux]);
+                                        do {
+                                            fflush(stdin);
+                                            val = scanf("%f", &nota_mate[aux]);
+                                            if (val != 1){
+                                                printf("Valor incorrecto ingrese denuevo: ");
+                                            }
+                                        } while (val != 1);
+                                        
                                         if (nota_mate[aux]< 0.1 || nota_mate[aux] > 10){
                                             printf("\nLa nota no es valida. Debe ser entre 0.1 y 10. Ingrese nuevamente la nota: ");
                                         } 
                                     } while (nota_mate[aux]< 0.1 || nota_mate[aux] > 10);
                                     notasreg[aux] = 1;
-                                    printf("\nNotas del estudiante %s reingresadas con exito.\n", nombres[aux]);
-                                } 
+                                    printf("\nNotas del estudiante %s modificadas con exito.\n", nombres[aux]);
+                                } else {
+                                    printf("No se modificaron las notas del estudiante %s.\n", nombres[aux]);
+                                }
 
                             } else {
                                 printf("\nIngrese la nota de Biologia del estudiante %s: ", nombres[aux]);
                                 do {
-                                    scanf("%f", &nota_bio[aux]);
+                                    do {
+                                        fflush(stdin);
+                                        val = scanf("%f", &nota_bio[aux]);
+                                        if (val != 1){
+                                            printf("Valor incorrecto ingrese denuevo: ");
+                                        }
+                                    } while (val != 1);
+                                    
                                     if (nota_bio[aux]< 0.1 || nota_bio[aux] > 10){
                                         printf("\nLa nota no es valida. Debe ser entre 0.1 y 10. Ingrese nuevamente la nota: ");
                                     } 
                                 } while (nota_bio[aux]< 0.1 || nota_bio[aux] > 10);
                                 printf("\nIngrese la nota de Lenguaje del estudiante %s: ", nombres[aux]);
                                 do {
-                                    scanf("%f", &nota_leng[aux]);
+                                    do {
+                                        fflush(stdin);
+                                        val = scanf("%f", &nota_leng[aux]);
+                                        if (val != 1){
+                                            printf("Valor incorrecto ingrese denuevo: ");
+                                        }
+                                    } while (val != 1);
+                                    
                                     if (nota_leng[aux]< 0.1 || nota_leng[aux] > 10){
                                         printf("\nLa nota no es valida. Debe ser entre 0.1 y 10. Ingrese nuevamente la nota: ");
                                     } 
                                 } while (nota_leng[aux]< 0.1 || nota_leng[aux] > 10);
                                 printf("\nIngrese la nota de Matematicas del estudiante %s: ", nombres[aux]);
                                 do {
-                                    scanf("%f", &nota_mate[aux]);
+                                    do {
+                                        fflush(stdin);
+                                        val = scanf("%f", &nota_mate[aux]);
+                                        if (val != 1){
+                                            printf("Valor incorrecto ingrese denuevo: ");
+                                        }
+                                    } while (val != 1);
+                                    
                                     if (nota_mate[aux]< 0.1 || nota_mate[aux] > 10){
                                         printf("\nLa nota no es valida. Debe ser entre 0.1 y 10. Ingrese nuevamente la nota: ");
                                     } 
@@ -163,7 +336,14 @@ int main ()
                         printf("Desea ingresar la nota de otro estudiante? \n 1. Si \n 2. No\n");
                         printf("Ingrese la opcion: ");
                         do {
-                            scanf("%d", &opc2);
+                            do {
+                                fflush(stdin);
+                                val = scanf("%d", &opc2);
+                                if (val != 1){
+                                    printf("Valor incorrecto ingrese denuevo: ");
+                                }
+                            } while (val != 1);
+                            
                             if (opc2 < 1 || opc2 > 2){
                                 printf("Opcion invalida. Ingrese nuevamente la opcion: ");
                             }
@@ -220,7 +400,13 @@ int main ()
                             }
                             printf("Elija la materia para ver el promedio de calificaciones grupal: ");
                             do {
-                                scanf("%d", &aux);
+                                do {
+                                    fflush(stdin);
+                                    val = scanf("%d", &aux);
+                                    if (val != 1){
+                                        printf("Valor incorrecto ingrese denuevo: ");
+                                    }
+                                } while (val != 1);
                                 if (aux < 1 || aux > 3){
                                     printf("El numero de materia ingresado es invalido.\nIngrese nuevamente el numero de la materia: ");
                                 }
@@ -262,7 +448,13 @@ int main ()
                             printf("Desea ver el promedio de otra materia? \n 1. Si \n 2. No\n");
                             printf("Ingrese la opcion: ");
                             do {
-                                scanf("%d", &opc2);
+                                do {
+                                    fflush(stdin);
+                                    val = scanf("%d", &opc2);
+                                    if (val != 1){
+                                        printf("Valor incorrecto ingrese denuevo: ");
+                                    }
+                                } while (val != 1);
                                 if (opc2 < 1 || opc2 > 2){
                                     printf("Opcion invalida. Ingrese nuevamente la opcion: ");
                                 }
@@ -291,7 +483,13 @@ int main ()
                                 }
                                 printf("Elija la materia para ver los aprobados y reprobados: ");
                                 do {
-                                    scanf("%d", &aux);
+                                    do {
+                                        fflush(stdin);
+                                        val = scanf("%d", &aux);
+                                        if (val != 1){
+                                            printf("Valor incorrecto ingrese denuevo: ");
+                                        }
+                                    } while (val != 1);
                                     if (aux < 1 || aux > 3){
                                         printf("El numero de materia ingresado es invalido.\nIngrese nuevamente el numero de la materia: ");
                                     }
@@ -330,7 +528,13 @@ int main ()
                             printf("\n");
                             printf("Desea ver los aprobados y reprobados de otra materia? \n 1. Si \n 2. No\n");
                             do {
-                                scanf("%d", &opc2);
+                                do {
+                                    fflush(stdin);
+                                    val = scanf("%d", &opc2);
+                                    if (val != 1){
+                                        printf("Valor incorrecto ingrese denuevo: ");
+                                    }
+                                } while (val != 1);
                                 if (opc2 < 1 || opc2 > 2){
                                     printf("Opcion invalida. Ingrese nuevamente la opcion: ");
                                 }
@@ -342,144 +546,144 @@ int main ()
                 break;
 
             case 6:
-                do {
-                    printf("Calificaciones altas y bajas\n\n");
-                    printf("1. Por materia\n");
-                    printf("2. Por estudiante\n");
-                    printf("3. Salir\n");
-                    printf("Seleccione una opcion: ");
-                    do {
-                        scanf("%d", &opc3);
-                        if (opc3 < 1 || opc3 > 2){
-                            printf("Opcion invalida. Ingrese nuevamente la opcion: ");
-                        }
-                    } while (opc3 < 1 || opc3 > 2);
+                
+                    if (nombing == 0){
+                        printf("\n\n");
+                        printf("No hay estudiantes registrados.\n\n\n");
+                    } else if (noting == 0){
+                        printf("\n\n");
+                        printf("No hay notas registradas.\n\n\n");
+                    } else {
+                        do {
+                            printf("Calificaciones altas y bajas\n\n");
+                            printf("1. Por materia\n");
+                            printf("2. Por estudiante\n");
+                            printf("3. Salir\n");
+                            printf("Seleccione una opcion: ");
+                            do {
+                                fflush(stdin);
+                                val = scanf("%d", &opc3);
+                                if (val != 1){
+                                    printf("Valor incorrecto ingrese denuevo: ");
+                                }
+                            } while (val != 1);
+                            if (opc3 < 1 || opc3 > 3){
+                                printf("Opcion invalida. Ingrese nuevamente la opcion: ");
+                            }
 
-                    switch (opc3){
-                        case 1:
-                            
-                            if (nombing == 0){
-                                printf("\n\n");
-                                printf("No hay estudiantes registrados.\n\n\n");
-                            } else if (noting == 0){
-                                printf("\n\n");
-                                printf("No hay notas registradas.\n\n\n");
-                            } else {
-                                printf("Calificaciones altas y bajas por materia\n\n");
-                                printf("#\tMateria\t\tNota Alta\t\t\tEstudiante\t\t\tNota Baja\t\t\tEstudiante\n");
-                                for (int i = 0; i < 3; i++){
-                                    int id_alto = -1, id_bajo = -1;
-                                    if (i == 0){
-                                        nota_altobio = -1;
-                                        nota_bajobio = 11;
-                                        for (int j = 0; j < 5; j++){
-                                            if (notasreg[j] == 1 && nota_bio[j] > 0){
-                                                if (nota_bio[j] > nota_altobio){
-                                                    nota_altobio = nota_bio[j];
-                                                    id_alto = j;
-                                                }
-                                                if (nota_bio[j] < nota_bajobio){
-                                                    nota_bajobio = nota_bio[j];
-                                                    id_bajo = j;
+                            switch (opc3){
+                                case 1:
+                                    printf("Calificaciones altas y bajas por materia\n\n");
+                                    printf("#\tMateria\t\tNota Alta\t\t\tEstudiante\t\t\tNota Baja\t\t\tEstudiante\n");
+                                    for (int i = 0; i < 3; i++){
+                                        int id_alto = -1, id_bajo = -1;
+                                        if (i == 0){
+                                            nota_altobio = -1;
+                                            nota_bajobio = 11;
+                                            for (int j = 0; j < 5; j++){
+                                                if (notasreg[j] == 1 && nota_bio[j] > 0){
+                                                    if (nota_bio[j] > nota_altobio){
+                                                        nota_altobio = nota_bio[j];
+                                                        id_alto = j;
+                                                    }
+                                                    if (nota_bio[j] < nota_bajobio){
+                                                        nota_bajobio = nota_bio[j];
+                                                        id_bajo = j;
+                                                    }
                                                 }
                                             }
-                                        }
-                                        if (id_alto != -1 && id_bajo != -1) {
-                                            printf("%d\t%s\t%.2f\t\t\t\t>> %s\t\t\t\t%.2f\t\t\t\t>> %s\n", i+1, materias[i], nota_altobio, nombres[id_alto], nota_bajobio, nombres[id_bajo]);
-                                        }
-                                    } else if (i == 1){
-                                        nota_altoleng = -1;
-                                        nota_bajoleng = 11;
-                                        for (int j = 0; j < 5; j++){
-                                            if (notasreg[j] == 1 && nota_leng[j] > 0){
-                                                if (nota_leng[j] > nota_altoleng){
-                                                    nota_altoleng = nota_leng[j];
-                                                    id_alto = j;
-                                                }
-                                                if (nota_leng[j] < nota_bajoleng){
-                                                    nota_bajoleng = nota_leng[j];
-                                                    id_bajo = j;
+                                            if (id_alto != -1 && id_bajo != -1) {
+                                                printf("%d\t%s\t%.2f\t\t\t\t>> %s\t\t\t\t%.2f\t\t\t\t>> %s\n", i+1, materias[i], nota_altobio, nombres[id_alto], nota_bajobio, nombres[id_bajo]);
+                                            }
+                                        } else if (i == 1){
+                                            nota_altoleng = -1;
+                                            nota_bajoleng = 11;
+                                            for (int j = 0; j < 5; j++){
+                                                if (notasreg[j] == 1 && nota_leng[j] > 0){
+                                                    if (nota_leng[j] > nota_altoleng){
+                                                        nota_altoleng = nota_leng[j];
+                                                        id_alto = j;
+                                                    }
+                                                    if (nota_leng[j] < nota_bajoleng){
+                                                        nota_bajoleng = nota_leng[j];
+                                                        id_bajo = j;
+                                                    }
                                                 }
                                             }
-                                        }
-                                        if (id_alto != -1 && id_bajo != -1) {
-                                            printf("%d\t%s\t%.2f\t\t\t\t>> %s\t\t\t\t%.2f\t\t\t\t>> %s\n", i+1, materias[i], nota_altoleng, nombres[id_alto], nota_bajoleng, nombres[id_bajo]);
-                                        }
-                                    } else if (i == 2){
-                                        nota_altomate = -1;
-                                        nota_bajomate = 11;
-                                        for (int j = 0; j < 5; j++){
-                                            if (notasreg[j] == 1 && nota_mate[j] > 0){
-                                                if (nota_mate[j] > nota_altomate){
-                                                    nota_altomate = nota_mate[j];
-                                                    id_alto = j;
-                                                }
-                                                if (nota_mate[j] < nota_bajomate){
-                                                    nota_bajomate = nota_mate[j];
-                                                    id_bajo = j;
+                                            if (id_alto != -1 && id_bajo != -1) {
+                                                printf("%d\t%s\t%.2f\t\t\t\t>> %s\t\t\t\t%.2f\t\t\t\t>> %s\n", i+1, materias[i], nota_altoleng, nombres[id_alto], nota_bajoleng, nombres[id_bajo]);
+                                            }
+                                        } else if (i == 2){
+                                            nota_altomate = -1;
+                                            nota_bajomate = 11;
+                                            for (int j = 0; j < 5; j++){
+                                                if (notasreg[j] == 1 && nota_mate[j] > 0){
+                                                    if (nota_mate[j] > nota_altomate){
+                                                        nota_altomate = nota_mate[j];
+                                                        id_alto = j;
+                                                    }
+                                                    if (nota_mate[j] < nota_bajomate){
+                                                        nota_bajomate = nota_mate[j];
+                                                        id_bajo = j;
+                                                    }
                                                 }
                                             }
-                                        }
-                                        if (id_alto != -1 && id_bajo != -1) {
-                                            printf("%d\t%s\t%.2f\t\t\t\t>> %s\t\t\t\t%.2f\t\t\t\t>> %s\n", i+1, materias[i], nota_altomate, nombres[id_alto], nota_bajomate, nombres[id_bajo]);
+                                            if (id_alto != -1 && id_bajo != -1) {
+                                                printf("%d\t%s\t%.2f\t\t\t\t>> %s\t\t\t\t%.2f\t\t\t\t>> %s\n", i+1, materias[i], nota_altomate, nombres[id_alto], nota_bajomate, nombres[id_bajo]);
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            break;
-                            
-                        case 2:
-                            
-    
-                            if (nombing == 0){
-                                printf("\n\n");
-                                printf("No hay estudiantes registrados.\n\n\n");
-                            } else if (noting == 0){
-                                printf("\n\n");
-                                printf("No hay notas registradas.\n\n\n");
-                            } else {
+                                
+                                break;
+                                
+                            case 2:
                                 printf("Calificaciones altas y bajas por estudiante\n\n");
-                                printf("#\tNombre\t\t\tNota Mas Alta\t\t\tMateria Alta\t\tNota Mas Baja\t\t\tMateria Baja\n");
+                                printf("#\tNombre\t\t\tNota Mas Alta\t\tMateria Alta\t\tNota Mas Baja\t\tMateria Baja\n");
                                 for (int i = 0; i < 5; i++) {
                                     if (notasreg[i] == 1) {
                                         float nota_alta = nota_bio[i];
                                         float nota_baja = nota_bio[i];
-                                        char *materia_alta = materias[0];
-                                        char *materia_baja = materias[0];
-    
+                                        char materia_alta[30];
+                                        char materia_baja[30];
+                                        strcpy(materia_alta, materias[0]);
+                                        strcpy(materia_baja, materias[0]);
+        
                                         if (nota_leng[i] > nota_alta) {
                                             nota_alta = nota_leng[i];
-                                            materia_alta = materias[1];
+                                            strcpy(materia_alta, materias[1]);
                                         }
                                         if (nota_mate[i] > nota_alta) {
                                             nota_alta = nota_mate[i];
-                                            materia_alta = materias[2];
+                                            strcpy(materia_alta, materias[2]);
                                         }
-    
+        
                                         if (nota_leng[i] < nota_baja) {
                                             nota_baja = nota_leng[i];
-                                            materia_baja = materias[1];
+                                            strcpy(materia_baja, materias[1]);
                                         }
                                         if (nota_mate[i] < nota_baja) {
                                             nota_baja = nota_mate[i];
-                                            materia_baja = materias[2];
+                                            strcpy(materia_baja, materias[2]);
                                         }
-    
-                                        printf("%d\t%s\t\t\t%.2f\t\t\t\t>> %s\t\t%.2f\t\t\t\t>> %s\n", i + 1, nombres[i], nota_alta, materia_alta, nota_baja, materia_baja);
+        
+                                        printf("%d\t%s\t\t\t%.2f\t\t\t>>%s\t\t%.2f\t\t\t>>%s\n", i + 1, nombres[i], nota_alta, materia_alta, nota_baja, materia_baja);
+                                        
                                     }
                                 }
+                                break;
+                                
+                            case 3:
+                                printf("Saliendo del menu de calificaciones altas y bajas.\n\n\n");
+                                break;
+                            default:
+                                printf("Opcion invalida. Ingrese nuevamente la opcion: ");
+                                break;
                             }
-                            break;
-                            
-                        case 3:
-                            printf("Saliendo del menu de calificaciones altas y bajas.\n\n\n");
-                            break;
-                        default:
-                            printf("Opcion invalida. Ingrese nuevamente la opcion: ");
-                            break;
+                        } while (opc3 != 3);
+                        
                     }
-                } while (opc3 < 1 || opc3 > 2);
-
+                
+                    
                 break;
             case 7:
                 printf("Saliendo del programa.\n\n\n");
